@@ -28,15 +28,20 @@ const hardQuestions = [
     answer: 2,
   },
   {
+    q: "Servidor permite que empresa declarada inidônea participe da licitação, mas ela não vence. A tipificação correta é:",
+    options: ["Crime consumado", "Crime tentado", "Fato atípico", "Crime impossível"],
+    answer: 1,
+  },
+    {
     q: "O projetista erra um cálculo técnico por negligência, causando prejuízo à Administração. Nesse caso:",
     options: ["Configura crime do art. 337-O", "Configura crime culposo", "Fato atípico penalmente", "Configura fraude"],
-    answer: 0,
+    answer: 2,
   },
 ];
 
 const questions = [...easyQuestions, ...hardQuestions];
 
-const prizeLadder = [1000, 10000, 50000, 100000, 500000, 1000000];
+const prizeLadder = [1000, 5000, 10000, 50000, 100000, 500000, 1000000];
 
 const gameState = {
   round: 0,
@@ -83,6 +88,10 @@ const ui = {
   soundToggle: document.getElementById("soundToggle"),
   resultTitle: document.getElementById("resultTitle"),
   resultText: document.getElementById("resultText"),
+  introTitle: document.getElementById("introTitle"),
+  prizeIfWrong: document.getElementById("prizeIfWrong"),
+  prizeIfStop: document.getElementById("prizeIfStop"),
+  prizeIfCorrect: document.getElementById("prizeIfCorrect"),
 };
 
 document.getElementById("startBtn").addEventListener("click", startGame);
@@ -96,6 +105,7 @@ ui.soundToggle.addEventListener("click", toggleSound);
 // Inicializar música de fundo no DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded - iniciando música de fundo");
+  syncStaticTexts();
   setTimeout(() => {
     playBackgroundMusic();
   }, 300);
@@ -155,10 +165,11 @@ function loadRound() {
 
   ui.roundLabel.textContent = `${gameState.round + 1} / ${questions.length}`;
   ui.currentPrize.textContent = formatPrize(gameState.currentPrize);
+  updatePrizePreview();
   updateHelpButtons();
   
   // Sequência de áudios para abertura da pergunta (similar ao jogo original)
-  const isMilestone = gameState.round === 2 || gameState.round === 5;
+  const isMilestone = isMilestoneRound(gameState.round);
   
   if (isMilestone) {
     // A cada 3 perguntas: toca áudio especial de revelação
@@ -197,7 +208,7 @@ function answerQuestion(index) {
     
     // Determinar qual áudio de acerto tocar
     let correctSound = "correct";
-    const isMilestone = gameState.round === 2 || gameState.round === 4;
+    const isMilestone = isMilestoneRound(gameState.round);
     if (isMilestone) {
       correctSound = "correctAlt";
     }
@@ -334,6 +345,30 @@ function endGame(win, message) {
   }, 3000);
 }
 
+function syncStaticTexts() {
+  if (ui.introTitle) {
+    ui.introTitle.textContent = `Você topa encarar ${questions.length} perguntas?`;
+  }
+
+  if (ui.roundLabel) {
+    ui.roundLabel.textContent = `1 / ${questions.length}`;
+  }
+
+  updatePrizePreview();
+}
+
+function updatePrizePreview() {
+  if (!ui.prizeIfWrong || !ui.prizeIfStop || !ui.prizeIfCorrect) return;
+
+  const ifWrong = getWrongPrizePreview();
+  const ifStop = gameState.currentPrize;
+  const ifCorrect = prizeLadder[gameState.round] ?? gameState.currentPrize;
+
+  ui.prizeIfWrong.textContent = formatPrize(ifWrong);
+  ui.prizeIfStop.textContent = formatPrize(ifStop);
+  ui.prizeIfCorrect.textContent = formatPrize(ifCorrect);
+}
+
 function toggleSound() {
   gameState.soundEnabled = !gameState.soundEnabled;
   ui.soundToggle.textContent = `Som: ${gameState.soundEnabled ? "ON" : "OFF"}`;
@@ -450,9 +485,17 @@ function isFinalRound() {
 }
 
 function getWrongPrize() {
+  return getWrongPrizePreview();
+}
+
+function getWrongPrizePreview() {
   if (isFinalRound()) return 0;
   if (gameState.currentPrize <= 0) return 0;
   return Math.floor(gameState.currentPrize / 2);
+}
+
+function isMilestoneRound(roundIndex) {
+  return (roundIndex + 1) % 3 === 0;
 }
 
 function playTone(frequencies, noteTime = 0.07) {

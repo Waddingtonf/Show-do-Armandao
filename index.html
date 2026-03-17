@@ -23,7 +23,7 @@
         <div class="intro-content">
           <img src="assets/images/logo.png" alt="Logo do jogo" class="intro-logo" />
           <p class="tagline">Perguntas, tensão e glória.</p>
-          <h2>Você topa encarar 6 perguntas?</h2>
+          <h2 id="introTitle">Você topa encarar 7 perguntas?</h2>
           <p class="intro-copy">Acertou, sobe o prêmio. Errou, o jogo acaba. Pare quando quiser e leve o valor atual.</p>
           <button id="startBtn" class="cta intro-cta">Começar o show</button>
         </div>
@@ -70,22 +70,22 @@
 
           <div class="prize-display">
             <div class="current-status">
-              <label>Rodada: <strong id="roundLabel">1 / 6</strong></label>
+              <label>Rodada: <strong id="roundLabel">1 / 7</strong></label>
               <label>Prêmio atual: <strong id="currentPrize">R$ 0</strong></label>
             </div>
           </div>
 
           <div class="prize-boxes">
             <div class="prize-box lose">
-              <span class="prize-value">500</span>
+              <span class="prize-value" id="prizeIfWrong">R$ 0</span>
               <span class="prize-label">Errar</span>
             </div>
             <div class="prize-box stop">
-              <span class="prize-value">1 MIL</span>
+              <span class="prize-value" id="prizeIfStop">R$ 0</span>
               <span class="prize-label">Parar</span>
             </div>
             <div class="prize-box win">
-              <span class="prize-value">2 MIL</span>
+              <span class="prize-value" id="prizeIfCorrect">R$ 1.000</span>
               <span class="prize-label">Acertar</span>
             </div>
           </div>
