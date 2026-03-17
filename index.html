@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Show do Sem Milhão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise-layer"></div>
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-content">
+      <img src="assets/images/logo.png" alt="Logo do Show" class="splash-logo" />
+      <div class="splash-bar"></div>
+    </div>
+  </div>
+  <main class="stage" id="stage">
+    <div class="game-shell">
+      <section class="intro-screen" id="introPanel">
+        <div class="intro-content">
+          <img src="assets/images/logo.png" alt="Logo do jogo" class="intro-logo" />
+          <p class="tagline">Perguntas, tensão e glória.</p>
+          <h2>Você topa encarar 6 perguntas?</h2>
+          <p class="intro-copy">Acertou, sobe o prêmio. Errou, o jogo acaba. Pare quando quiser e leve o valor atual.</p>
+          <button id="startBtn" class="cta intro-cta">Começar o show</button>
+        </div>
+      </section>
+
+      <div class="game-container hidden" id="gamePanel">
+        <div class="game-left">
+
+          <div class="question-box">
+            <p class="question-text" id="questionText">Pergunta aqui</p>
+          </div>
+
+          <div class="answers-container">
+            <div class="answers" id="answers"></div>
+          </div>
+          <div class="game-logo-container">
+            <img src="assets/images/logo.png" alt="Logo do jogo" class="game-logo" />
+          </div>
+        </div>
+
+        <div class="game-right">
+          <div class="right-top">
+            <button id="soundToggle" class="sound-btn" aria-label="Ativar ou desativar som">Som: ON</button>
+            <button class="stop-btn" id="stopBtn">Parar</button>
+          </div>
+
+          <div class="helps-section">
+            <h3>Ajuda</h3>
+            <div class="helps-grid">
+              <button class="help-btn" id="help5050" title="Elimina 2 respostas erradas">
+                <span class="help-icon">🎰</span>
+                <span>50:50</span>
+              </button>
+              <button class="help-btn" id="helpSkip" title="Pula para a próxima pergunta">
+                <span class="help-icon">⏭️</span>
+                <span>Pular</span>
+              </button>
+              <button class="help-btn" id="helpAudience" title="O público vota a resposta">
+                <span class="help-icon">👥</span>
+                <span>Plateia</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prize-display">
+            <div class="current-status">
+              <label>Rodada: <strong id="roundLabel">1 / 6</strong></label>
+              <label>Prêmio atual: <strong id="currentPrize">R$ 0</strong></label>
+            </div>
+          </div>
+
+          <div class="prize-boxes">
+            <div class="prize-box lose">
+              <span class="prize-value">500</span>
+              <span class="prize-label">Errar</span>
+            </div>
+            <div class="prize-box stop">
+              <span class="prize-value">1 MIL</span>
+              <span class="prize-label">Parar</span>
+            </div>
+            <div class="prize-box win">
+              <span class="prize-value">2 MIL</span>
+              <span class="prize-label">Acertar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="result-screen hidden" id="resultPanel">
+        <div class="result-content">
+          <h2 id="resultTitle">Fim de jogo</h2>
+          <p id="resultText">Texto</p>
+          <button id="restartBtn" class="cta result-cta">Jogar novamente</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <audio id="themeAudio" preload="auto">
+    <source src="assets/audios/vai-comecar.wav" type="audio/wav" />
+  </audio>
+
+  <audio id="backgroundMusic" preload="auto" loop>
+    <source src="assets/audios/musicatema.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
