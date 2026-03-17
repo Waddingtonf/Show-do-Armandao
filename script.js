@@ -30,7 +30,7 @@ const hardQuestions = [
   {
     q: "Servidor permite que empresa declarada inidônea participe da licitação, mas ela não vence. A tipificação correta é:",
     options: ["Crime consumado", "Crime tentado", "Fato atípico", "Crime impossível"],
-    answer: 1,
+    answer: 0,
   },
     {
     q: "O projetista erra um cálculo técnico por negligência, causando prejuízo à Administração. Nesse caso:",
